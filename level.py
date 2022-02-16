@@ -10,13 +10,13 @@ class Level:
         # get the display surface
         self.display_surface = pygame.display.get_surface()
         # spite group setup
-        self.visible_sprites = pygame.sprite.Group()
+        self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
         self.create_map()
 
     def run(self):
         # update and draw the game
-        self.visible_sprites.draw(self.display_surface)
+        self.visible_sprites.custom_draw()
         self.visible_sprites.update()
         debug(self.player.direction)
 
@@ -29,3 +29,12 @@ class Level:
                     Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites)
+
+
+class YSortCameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()
+    def custom_draw(self):
+        for sprite in self.sprites():
+            self.display_surface.blit(sprite.image, sprite.rect)
