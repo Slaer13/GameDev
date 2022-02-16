@@ -11,7 +11,7 @@ class Level:
         self.display_surface = pygame.display.get_surface()
         # spite group setup
         self.visible_sprites = pygame.sprite.Group()
-        self.abstacle_sprites = pygame.sprite.Group()
+        self.obstacle_sprites = pygame.sprite.Group()
         self.create_map()
 
     def run(self):
@@ -26,6 +26,6 @@ class Level:
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
                 if col == 'x':
-                    Tile((x, y), [self.visible_sprites, self.abstacle_sprites])
+                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
                 if col == 'p':
-                    self.player = Player((x, y), [self.visible_sprites])
+                    self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites)
